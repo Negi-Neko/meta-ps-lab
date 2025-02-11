@@ -803,10 +803,12 @@ a.btn--orange2:hover {
 .btn--orange2,
 a.btn--orange2 {
   display: flex; 
-  width:55vw;
-  font-size: 1.3rem;
+  font-size: 2rem;
   align-items: center;
   margin-bottom: 5%;
+  box-sizing: border-box;/*これを指定すれば子要素に応じて自動で長さが変わる*/
+  white-space: nowrap;/*折り返しをさせない*/
+  padding:2% 5%;
 }
 
 a.btn--orange2 img{
