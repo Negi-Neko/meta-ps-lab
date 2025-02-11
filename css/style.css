@@ -1,0 +1,817 @@
+@charset "UTF-8";
+
+/*-------------------------------------------
+　▽初期化▽
+-------------------------------------------*/
+body {
+  margin: 0;
+  padding:0;
+}
+
+main{
+  margin:0;
+  padding:0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/*-------------------------------------------
+　▽全体に関わるレイアウト設定▽
+-------------------------------------------*/
+
+html{
+  font-size:100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;/*rem算出をしやすくするために*/
+}
+body{
+  width: 100%;
+  /*以下、汎用性のある無難なフォントセット */
+  /*https://ics.media/entry/200317/*/
+  font-family: "游明朝", "YuMincho", "Hiragino Mincho ProN W3", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
+  font-weight: bold;
+}
+
+/*-------------------------------------------
+　▽wrapper設定▽
+-------------------------------------------*/
+.wrapper{
+  max-width:960px;
+  margin:100px auto 100px auto;
+  padding:0;
+  margin: 0;
+}
+
+
+/*-------------------------------------------
+　▽橋村先生の上に行くイラスト▽
+-------------------------------------------*/
+.page_top_btn img{
+	width:13VW;
+	animation: fuwafuwa 2s infinite;
+}
+
+.page_top_btn {
+  display: flex;
+  flex-direction: column;
+
+	position: fixed;
+	bottom: 0.5vw;
+	right: 1vw;
+	text-align: center;
+	transition: 0.3s0;
+	z-index: 300;/*position指定がされてるからこそz-indexが設定できる */
+	}
+
+  .page_top_btn p{
+    color: #ffd700;
+    font-size: 1.3vw;
+    margin: 0 auto;
+    margin-bottom: 1vw;
+    }
+	
+  /* 上への移動をスムーズに */
+  html{
+  scroll-behavior: smooth;
+  }
+
+  @keyframes fuwafuwa {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+    }
+
+/*-------------------------------------------
+　▽mainのレイアウト設定▽
+-------------------------------------------*/
+.topImg{
+  width: 100%;
+  height: 100%;
+  background-size: cover; /*background-sizeは背景画像に対しての指定になる、object-fitはimg要素に対する指定になる、*/
+  object-position: 100% 100%;
+  background-repeat : no-repeat;
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+
+  position: relative; /* コンテナ内でスライド位置を相対的に設定 */
+  overflow: hidden; /* スライドがコンテナ外に出ないように非表示 */
+}
+
+.slideimg {
+  z-index:0;
+	position: absolute; /* 位置を絶対指定で重ねて配置 */
+ 	inset: 0; /*親要素内にフルサイズで配置*/
+	opacity: 0; /* 初期状態で透明に */
+	background-size: cover; /* 画像をスライド全体にカバー */
+	animation: slideAnime 15s infinite; /* 1サイクル15秒を無限ループ */
+}
+
+/* スライド個別設定 */
+.slideimg:nth-of-type(1) { background-image: url('../images/andromeda2.JPG'); animation-delay: 0s; }
+.slideimg:nth-of-type(2) { background-image: url('../images/ura_Hashimura1-2.png'); animation-delay: 3s; }
+.slideimg:nth-of-type(3) { background-image: url('../images/ura_book8.JPG'); animation-delay: 6s; }
+.slideimg:nth-of-type(4) { background-image: url('../images/ura_picture1-2.png'); animation-delay: 9s; }
+.slideimg:nth-of-type(5) { background-image: url('../images/ura_figurine2.JPG'); animation-delay: 12s; }
+
+/*タイミング設定*/
+@keyframes slideAnime {
+	0%, 30%, 100% { opacity: 0; } /* 非表示のタイミング */
+	10%, 20% { opacity: 1; } /* 表示されるタイミング */
+}
+
+.upper-left{
+  font-size: 6VW;/*VWで画面幅に合わせて縮小してくれる */
+  margin-top: 0;
+  margin-left: 2%;
+  font-weight: bold;
+  color: #ff69b4;
+  -webkit-text-stroke: 0.1vw black;
+  text-shadow:
+   5px  5px 5px black,
+  -5px  5px 5px black,
+   5px -5px 5px black,
+  -5px -5px 5px black;
+  z-index:100;
+}
+
+.bottom-left{
+  width: 35VW;/*vhではなく%にすれば画面幅に合わせて縮小してくれる */
+  margin-top: 15%;
+  z-index:100;
+}
+.bottom-left img{
+  width:100%;
+  bottom: 30px;
+  z-index:100;
+}
+
+/*-------------------------------------------------
+↑参考サイト：
+https://web-camp.io/magazine/archives/94984
+https://ameblo.jp/hp-daiko/entry-12171899980.html
+-------------------------------------------------*/
+
+/*-------------------------------------------
+　電話ボタン
+-------------------------------------------*/
+/*電話ボタンを設定するための共通設定 */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index:100;
+}
+
+.btn,
+a.btn,
+button.btn {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #212529;
+  border-radius: 100vh;/*ボタンの角を丸める */
+  z-index:100;
+}
+
+
+.btn--orange,
+a.btn--orange {
+  display: flex; 
+  width:400px;
+  color: #fff;
+  background-color: black;
+  font-size: 3rem;
+  align-items: center;
+  margin: 0 0 2% auto;/*margin-right:0 じゃ効かなかったのに・・・ */
+  z-index:100;
+}
+
+a.btn--orange img{
+  width:7rem;
+  margin-right: 1rem;
+  z-index:100;
+}
+
+.btn--orange:hover,
+a.btn--orange:hover {
+  color: #fff;
+  background: gray;
+  z-index:100;
+}
+
+.btn--orange2,
+a.btn--orange2 {
+  display: flex; 
+  width:50vw;
+  background-color: #9acd32;
+  font-size: 4vw;
+  font-weight: bold;
+  align-items: center;
+  margin: 0 auto;/*margin-right:0 じゃ効かなかったのに・・・ */
+  margin-bottom: 5%;
+  justify-content: center;/*これで中央寄せになる */
+  z-index:100;
+}
+
+a.btn--orange2 img{
+  width:5vw;
+  margin-right: 1rem;
+  z-index:100;
+}
+
+.btn--orange2:hover,
+a.btn--orange2:hover {
+  background: #adff2f;
+  z-index:100;
+}
+
+
+/*-------------------------------------------
+　背景
+-------------------------------------------*/
+.bigWrapper{
+  background-image: url("../images/background.png");
+  background-size: 100%;
+  background-repeat: repeat-y;
+}	
+
+.bigWrapper2{/*背景画像を画面いっぱいに表示させる*/ 
+  background-image: url("../images/hole3.png");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}	
+.bigWrapper3{
+  background-image: url("../images/space.jpg");
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}	
+.bigWrapper4{
+  background-image: url("../images/spiritual1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.bigWrapper5{
+  background-image: url("../images/space.jpg");
+  background-size: 100%;
+  background-repeat: repeat-y;
+  position: relative;
+}
+
+.bigWrapper6{
+  background-image: url("../images/background2.png");
+  background-size: 100%;
+  background-repeat: repeat-y;
+  padding: 5%;
+}	
+
+/*-------------------------------------------
+　ABOUT設定
+-------------------------------------------*/
+#about{
+  padding:0;
+}
+
+#about .content{
+  text-align: center;
+  font-size:2vw;
+  margin: 0 auto;/*max-width指定時はtext-alignが効かない。代わりにmargin設定で。 */ 
+}
+
+#about .content:last-child{
+  margin-bottom: 5%;
+}
+
+#about .content2{/*橋村先生プロフ写真 */ 
+  display:flex;
+  margin:0 auto;
+  justify-content: center;
+  align-items: center;
+  padding:5% 5% 8% 5%;
+}
+
+#about .content2 img{
+  width: 35vw;
+  height: auto;
+  aspect-ratio: 1/1;/*img要素にaspect-ratioとobject-fit: coverを指定する事でaspect-ratioの比率で画像をトリミングできる */
+	object-fit:cover;
+	border-radius:10%;
+  object-position: 0px;
+}
+
+#about .profile:last-child{
+  margin-left:4%;
+}
+
+#about .content2 h2{
+  margin: 0;
+  font-size: 4vw;
+}
+#about .content2 p{
+  font-size: 1.5vw;
+  box-sizing: border-box;
+}
+
+.profile h3{
+  margin: 0;
+  font-size: 2vw;
+  color: gray;
+}
+
+/*-------------------------------------------
+　sectionごとのレイアウト設定
+-------------------------------------------*/
+.rightWrapper{
+  width: 50vw;
+  margin-right: 0;  
+  margin-left: auto;
+  border-bottom: 5px solid gray;
+  padding: 0;
+  padding-top: 3%;
+}
+
+.rightWrapper p{
+  display: flex;
+  justify-content: flex-end;
+  color: gray;
+  font-size: 5vw;
+  margin: 0;
+  padding: 0;
+  margin-right: 5%;
+}
+
+.leftWrapper{
+  width: 50vw;
+  margin-left: 0;  
+  margin-right: auto;
+  border-bottom: 5px solid gray;
+  padding: 0;
+  padding-top: 3%;
+}
+
+.leftWrapper p{
+  display: flex;
+  justify-content: flex-start;
+  color: gray;
+  font-size: 5vw;
+  margin: 0;
+  padding: 0;
+  margin-left: 5%;
+
+}
+
+.middleText{/*常に真実を・・・*/
+  writing-mode: vertical-rl;
+  margin: 0 auto;
+  font-size: 5vw;
+  color: #191970;
+  white-space: nowrap;
+  align-items: center;
+}
+.middleText2{/*目に見えない世界へ・・・*/
+  writing-mode: vertical-rl;
+  margin: 0 auto;
+  min-height: 700px;/*ここの数値は画面幅依存のvhなどではなく固定値にしないと大変なことになる*/
+  font-size: 3vw;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.flexBox{
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.middleText3{/*右寄せの小文字*/
+  writing-mode: vertical-rl;
+  font-size: 2vw;
+  color: #fff;
+  white-space: nowrap;
+  padding: 5%;
+}
+.middleText4{/*左寄せの小文字*/
+  writing-mode: vertical-rl;
+  font-size: 2vw;
+  color: #fff;
+  white-space: nowrap;
+  padding: 5%;
+}
+.middleText5{
+  font-size: 4vw;
+  text-align: center;
+}
+
+/*-------------------------------------------
+　主な対応ケース以降の設定
+-------------------------------------------*/
+
+#leftImage {
+	height: 100%;
+	width: 10%;
+	position: absolute;
+	left: 0;
+	background-repeat: repeat-y;
+	background-image: url("../images/ura_figurine4-2L.png");
+	display: block;
+  background-size: contain;/*縦横比維持で画像をすべて含める*/
+}
+
+#rightImage {
+	height: 100%;
+	width: 10%;
+	position: absolute;
+	right: 0;
+	background-position: right top;/*これがないと謎の余白が生じる*/
+	background-repeat: repeat-y;
+	background-image: url("../images/ura_figurine4-2R.png");
+	display: block;
+  background-size: contain;/*縦横比維持で画像をすべて含める*/
+}
+
+#middleWrapper{
+	width: 100%;
+	height: 100%;
+  margin: 0 auto;
+  padding-bottom:5%;
+}
+
+#middleContent{
+	width:80vw;
+	height: 100%;
+	margin: 0 auto;
+}
+
+/*▽対応ケース▽*/
+.List {
+  display: flex;
+  flex-wrap: wrap;/*4記事以上ある場合、折り返しできるように指定*/
+  justify-content: space-between;
+  margin:3%;
+  gap: 10px 5px;
+}
+.List li {
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 1.5vw 1.5vw 1.5vw 1.5vw; /* 左上・右上・右下・左下 */
+  padding: 1%;
+	border: solid 0.2vw #fff;
+}
+
+.List li p{
+  color: #fff;
+  font-size: 2vw;
+  margin: 0;
+}
+
+
+/*▽資格写真▽*/
+
+
+.List2 {
+  display: flex;
+  flex-wrap: wrap;/*4記事以上ある場合、折り返しできるように指定*/
+  justify-content: space-between;
+  margin-bottom: 3%;
+  padding: 3vw;
+}
+.List2 li {
+  width: 35vw;
+  text-align: center;
+}
+
+.List2 li figure {
+  width: 100%;
+  position: relative;/* 画像をぼかす魔法その１ */
+  padding-top: 100%;
+  margin: 0 auto;/* これがないと右にはみ出る */
+}
+
+.List2 li figure::after {/* 画像をぼかす方法その２ */
+  position: absolute;
+  display: block;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;/* これと下の値を弄ると正しく全体がボケなくなる */
+  height: 100%;
+  box-shadow:
+  inset 0 0 25px black /* 背景色と同じ色 */,
+  inset 0 0 25px black,
+  inset 0 0 25px black,
+  inset 0 0 25px black;
+}
+.List2 li h1{
+  font-size: 1.5vw;
+  color:#fff;
+}
+
+.List2 li figure img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.List3 {
+  display: flex;
+  flex-wrap: wrap;/*4記事以上ある場合、折り返しできるように指定*/
+  justify-content: space-between;
+  margin:3%;
+  gap: 10px 5px;
+}
+.List3 li {
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 1.5vw 1.5vw 1.5vw 1.5vw; /* 左上・右上・右下・左下 */
+	border: solid 0.3vw orange;
+}
+
+.List3 li p{
+  font-size: 2vw;
+  margin: 0;
+}
+
+.panelHeader{
+  text-align: center;
+  font-size: 3vw;
+  /*aboutの背景色を変えたら、なぜか白い部分が残っていた。見てみるとこの設定内で勝手に上にも余白ができていたのでわざわざ0を指定したら直った。*/
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.panelHeader span.line{
+  background:linear-gradient(transparent 60%, #ffd700 60%);
+  /*html上でspanタグのみにしても微調整ができない。まずspanを「span class」とクラス属性を与え、css側で設定する事で調整可能。今回は色付きのマーカーを文字の下に引いた。*/
+}
+.panelHeader span.orange{
+  color: #ff8c00;
+  font-size: 5vw;
+}
+
+.info{
+  text-align: center;/* 親要素に指定。子要素を中央揃えに */
+  margin-bottom: 3%;
+}
+
+.info p{
+  display:inline-block;/* 子要素に指定。横幅は内容物のサイズにフィットする。ただし行として認識されてしまい、margin:0 autoが効かない */
+  font-size: 2vw;
+  margin: 0;
+}
+
+.info p:last-child{
+  border-top: 1.5px solid #808080;
+}
+
+.map {
+  width: 100%;
+  position: relative;
+  padding-top: 56.25%;
+  margin-bottom: 5%;
+}
+
+.map iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/*-------------------------------------------
+　footerのレイアウト設定
+-------------------------------------------*/
+
+#footer{
+  text-align: center;
+  background-color: black;
+  color:#ffffff;
+  font-size:0.5rem;
+  padding:10px 20px;
+}
+
+#footer p{
+  font-size: 1vw;
+  margin:0;
+}
+/*paddingを活用することで上下中央に文字を配置できることに気づいた*/
+ 
+
+/*-------------------------------------------
+　スマートフォンのレイアウト設定
+-------------------------------------------*/
+@media screen and (max-width: 800px) {
+  .topImg{
+    text-align: center;/*親要素を元にして子要素をどこに配置するかを決めるプロパティの為、親要素に text-alignを指定する*/
+    align-items: center;
+    flex-direction: column;
+    background-size: 900px;/*widthをpxで固定して、object-fit:coverにすれば大きさ変わらず左右をトリミングできる */
+    object-fit: cover;
+    background-position:20% 20%;
+  }
+  .topImg .upper-left{
+    text-align: center;
+    font-size: 8vw;
+    margin:auto;
+    right:0;
+    left: 0;
+    margin-bottom: 30%;
+  }
+  .bottom-left{
+    width: 60vw;/*vhではなく%にすれば画面幅に合わせて縮小してくれる */
+    margin-top: 0%;
+    margin-left: 0%;
+    margin-bottom: 10%;
+  }
+  .bottom-left img{
+    width:100%;
+    bottom: 30px;
+  }
+  .btn--orange,
+  a.btn--orange {
+    width:300px;
+    font-size: 1.5rem;
+    align-items: center;
+    margin: 0;/*margin-right:0 じゃ効かなかったのに・・・ */
+    margin-bottom: 5%;
+  }
+    a.btn--orange img{
+    width:5rem;
+    margin-right: 1rem;
+  }
+
+  .rightWrapper{
+    width: 50vw;
+    margin-right: 0;  
+    margin-left: auto;
+    border-bottom: 5px solid gray;
+    padding: 0;
+    padding-top: 3%;
+  }
+
+
+
+.middleWrapper{
+  text-align: center;/*親要素を元にして子要素をどこに配置するかを決めるプロパティの為、親要素に text-alignを指定する*/
+  align-items: center;
+  flex-direction: column;
+}
+
+/*▽橋村先生のプロフ調整▽*/
+#about .content2{
+  display:flex;  
+  text-align: center;/*親要素を元にして子要素をどこに配置するかを決めるプロパティの為、親要素に text-alignを指定する*/
+  flex-direction: column;
+}
+#about .content2 img{
+  object-position:-18px 0px;
+}
+
+/*▽List共通調整▽*/
+
+.List li {
+  width: 50%;
+}
+
+.List2 li h1{
+  font-size: 2vw;
+}
+
+#about .content2 img{
+  width: 35vw;
+  height: auto;
+  aspect-ratio: 1/1;/*img要素にaspect-ratioとobject-fit: coverを指定する事でaspect-ratioの比率で画像をトリミングできる */
+	object-fit:cover;
+	border-radius:10%;
+  object-position: 0 -30px;
+}
+
+#about .content2 h2{
+  margin: 0;
+  font-size: 6vw;
+}
+#about .content2 p{
+  font-size: 2.5vw;
+}
+
+.profile h3{
+  margin: 0;
+  font-size: 3vw;
+  color: gray;
+}
+#about .profile:last-child{
+  margin-left:0;
+}
+
+.List3{
+  margin:3% 0;
+  gap: 10px 0;
+}
+
+.List3 li {
+	border: solid 0.7vw orange;
+}
+.List3 li p{
+  font-size: 2.3vw;
+}
+
+
+.middleText2{/*目に見えない世界へ・・・*/
+  font-size: 5vw;
+  min-height: 500px;
+}
+.bigWrapper2{/*背景画像を画面いっぱいに表示させる*/ 
+  background-size: 200% 100%;
+  background-position: 50% 50%;
+}	
+.bigWrapper4{/*object fit:coverで画面いっぱいに画像が表示されるようになっているので、あとはheightを2倍にすれば左右切り取れる*/
+  width: 100%;
+  height:200%;
+  background-position: 50% 50%;
+  position: relative;
+}
+
+.middleText3{/*右寄せの小文字*/
+  font-size: 3vw;
+}
+.middleText4{/*左寄せの小文字*/
+  font-size: 3vw;
+}
+.info p{
+  display:inline-block;/* 子要素に指定。横幅は内容物のサイズにフィットする。ただし行として認識されてしまい、margin:0 autoが効かない */
+  font-size: 3vw;
+  margin: 0;
+}
+.rightWrapper{
+  border-bottom: 2px solid gray;
+}
+.leftWrapper{
+  border-bottom: 2px solid gray;
+}
+
+
+.btn--orange2,
+a.btn--orange2 {
+  display: flex; 
+  width:55vw;
+  font-size: 1.3rem;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+a.btn--orange2 img{
+  width:7vw;
+  margin-right: 1%;
+}
+
+}
